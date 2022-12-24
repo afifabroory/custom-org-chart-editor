@@ -4409,33 +4409,34 @@ EditorUi.prototype.executeLayout = function(exec, animate, post)
 /**
  * Hides the current menu.
  */
-EditorUi.prototype.showImageDialog = function(title, value, fn, ignoreExisting)
+EditorUi.prototype.showImageDialog = function(value, fn, ignoreExisting)
 {
 	var cellEditor = this.editor.graph.cellEditor;
 	var selState = cellEditor.saveSelection();
-	var newValue = mxUtils.prompt(title, value);
+	// var newValue = mxUtils.prompt(title, value);
+	this.showDialog(new ImageDialog(this, fn).container, 300, 100);
 	cellEditor.restoreSelection(selState);
 	
-	if (newValue != null && newValue.length > 0)
-	{
-		var img = new Image();
+	// if (newValue != null && newValue.length > 0)
+	// {
+	// 	var img = new Image();
 		
-		img.onload = function()
-		{
-			fn(newValue, img.width, img.height);
-		};
-		img.onerror = function()
-		{
-			fn(null);
-			mxUtils.alert(mxResources.get('fileNotFound'));
-		};
+	// 	img.onload = function()
+	// 	{
+	// 		fn(newValue, img.width, img.height);
+	// 	};
+	// 	img.onerror = function()
+	// 	{
+	// 		fn(null);
+	// 		mxUtils.alert(mxResources.get('fileNotFound'));
+	// 	};
 		
-		img.src = newValue;
-	}
-	else
-	{
-		fn(null);
-	}
+	// 	img.src = newValue;
+	// }
+	// else
+	// {
+	// 	fn(null);
+	// }
 };
 
 /**

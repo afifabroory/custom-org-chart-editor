@@ -1341,7 +1341,7 @@ Actions.prototype.init = function()
 	{
 		if (graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent()))
 		{
-			var title = mxResources.get('image') + ' (' + mxResources.get('url') + '):';
+			// var title = mxResources.get('image') + ' (' + mxResources.get('url') + '):';
 	    	var state = graph.getView().getState(graph.getSelectionCell());
 	    	var value = '';
 	    	
@@ -1352,7 +1352,7 @@ Actions.prototype.init = function()
 	    	
 	    	var selectionState = graph.cellEditor.saveSelection();
 	    	
-	    	ui.showImageDialog(title, value, function(newValue, w, h)
+	    	ui.showImageDialog(value, function(newValue, w, h)
 			{
 	    		// Inserts image into HTML text
 	    		if (graph.cellEditor.isContentEditing())

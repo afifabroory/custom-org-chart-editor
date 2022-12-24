@@ -374,6 +374,63 @@ var AboutDialog = function(editorUi)
 	this.container = div;
 };
 
+var ImageDialog = function (editorUi, fn, cancelFn)
+{
+	// Container
+	var div = document.createElement('div');
+	div.setAttribute('align', 'center');
+	
+	// Title
+	var h3 = document.createElement('h3');
+	mxUtils.write(h3, 'Insert Image');
+	div.appendChild(h3);
+
+	var fileInput = document.createElement('input');
+	fileInput.type = 'file';
+	fileInput.accept = 'image/*';
+	fileInput.style.marginTop = '8px';
+	fileInput.style.marginBottom = '16px';
+	div.appendChild(fileInput);
+
+	// Container for button
+	var subDiv = document.createElement('div');
+	subDiv.setAttribute('align', 'right');
+
+	// Cancel button
+	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
+	{
+		editorUi.hideDialog();
+		
+		if (cancelFn != null)
+		{
+			cancelFn();
+		}
+	});
+	cancelBtn.className = 'geBtn';
+	subDiv.appendChild(cancelBtn);
+
+	// Insert button
+	var genericBtn = mxUtils.button('Insert', function()
+	{
+		var img = new Image();
+		img.onload = () => {
+			fn(img.src, img.width, img.height)
+			// URL.revokeObjectURL(img.src) // free memory
+		}
+		img.src = URL.createObjectURL(fileInput.files[0]);
+		console.log(img);
+		
+		editorUi.hideDialog();
+	});
+		
+	genericBtn.className = 'geBtn gePrimaryBtn';	
+	subDiv.appendChild(genericBtn);
+
+	div.append(subDiv);
+
+	this.container = div;
+};
+
 /**
  * Constructs a new textarea dialog.
  */
