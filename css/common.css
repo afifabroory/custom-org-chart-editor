@@ -164,3 +164,23 @@ td.mxPopupMenuIcon {
 	opacity: 0.2 !important;
 	cursor:default !important;
 }
+
+#imageContainer {
+	padding: 20px;
+	overflow-y: scroll;
+	height: 250px;
+	margin-bottom: 12px;
+}
+
+#imageContainer  input[type="radio"] {
+	display: none;
+}
+  
+#imageContainer  img {
+	padding: 5px;
+	margin: 5px;
+}
+  
+#imageContainer  input[type="radio"]:checked + img {
+	background-color: #aaa;
+}
