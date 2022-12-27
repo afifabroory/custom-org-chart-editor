@@ -381,52 +381,73 @@ var ImageDialog = function (editorUi, fn, cancelFn)
 	div.setAttribute('align', 'center');
 	
 	// Title
-	var h3 = document.createElement('h3');
-	mxUtils.write(h3, 'Insert Image');
+	var h3 = document.createElement('h2');
+	h3.style.marginTop = '0px';
+	mxUtils.write(h3, 'Insert image from assets');
 	div.appendChild(h3);
 
-	var fileInput = document.createElement('input');
-	fileInput.type = 'file';
-	fileInput.accept = 'image/*';
-	fileInput.style.marginTop = '8px';
-	fileInput.style.marginBottom = '16px';
-	div.appendChild(fileInput);
+	// Image list
+	var imageContainer = document.createElement('div');
+	imageContainer.setAttribute('id', 'imageContainer');
 
-	// Container for button
-	var subDiv = document.createElement('div');
-	subDiv.setAttribute('align', 'right');
-
-	// Cancel button
-	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
-	{
-		editorUi.hideDialog();
-		
-		if (cancelFn != null)
+	// Variable getImageAssets must declare in global scope
+	getImageAssets().then(data => {
+		data.forEach((e, i) => {
+			let label = document.createElement('label');
+	
+			let input = document.createElement('input');
+			input.type = 'radio';
+			input.name = 'images';
+			input.value = i;
+	
+			let image = new Image();
+			image.src = e['photo'];
+			console.log(image)
+			image.height = 80;
+	
+			label.appendChild(input);
+			label.appendChild(image);
+			imageContainer.appendChild(label)
+		}) 
+		div.appendChild(imageContainer);
+		// End Image List
+	
+		// Container for button
+		var subDiv = document.createElement('div');
+		subDiv.setAttribute('align', 'right');
+	
+		// Cancel button
+		var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
 		{
-			cancelFn();
-		}
-	});
-	cancelBtn.className = 'geBtn';
-	subDiv.appendChild(cancelBtn);
-
-	// Insert button
-	var genericBtn = mxUtils.button('Insert', function()
-	{
-		var img = new Image();
-		img.onload = () => {
-			fn(img.src, img.width, img.height)
-			// URL.revokeObjectURL(img.src) // free memory
-		}
-		img.src = URL.createObjectURL(fileInput.files[0]);
-		console.log(img);
-		
-		editorUi.hideDialog();
-	});
-		
-	genericBtn.className = 'geBtn gePrimaryBtn';	
-	subDiv.appendChild(genericBtn);
-
-	div.append(subDiv);
+			editorUi.hideDialog();
+			
+			if (cancelFn != null)
+			{
+				cancelFn();
+			}
+		});
+		cancelBtn.className = 'geBtn';
+		subDiv.appendChild(cancelBtn);
+	
+		// Insert button
+		var genericBtn = mxUtils.button('Insert', function()
+		{
+			var srcImage = data[parseInt(document.querySelector('#imageContainer input[name="images"]:checked').value)]['photo'];
+			var img = new Image();
+			img.onload = () => {
+				fn(srcImage, img.width, img.height)
+			}
+			img.src = srcImage;
+			
+			editorUi.hideDialog();
+		});
+			
+		genericBtn.className = 'geBtn gePrimaryBtn';	
+		subDiv.appendChild(genericBtn);
+	
+		div.append(subDiv);
+	})
+	
 
 	this.container = div;
 };
