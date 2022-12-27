@@ -4414,7 +4414,7 @@ EditorUi.prototype.showImageDialog = function(value, fn, ignoreExisting)
 	var cellEditor = this.editor.graph.cellEditor;
 	var selState = cellEditor.saveSelection();
 	// var newValue = mxUtils.prompt(title, value);
-	this.showDialog(new ImageDialog(this, fn).container, 300, 100);
+	this.showDialog(new ImageDialog(this, fn).container, 500, 350);
 	cellEditor.restoreSelection(selState);
 	
 	// if (newValue != null && newValue.length > 0)
