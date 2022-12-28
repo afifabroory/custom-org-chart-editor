@@ -7,9 +7,9 @@ window.urlParams = window.urlParams || {};
 window.MAX_REQUEST_SIZE = window.MAX_REQUEST_SIZE  || 10485760;
 window.MAX_AREA = window.MAX_AREA || 15000 * 15000;
 
-window.EXPORT_URL = 'http://localhost/mxgraph-php/examples/deployment.php';
-window.SAVE_URL = 'http://localhost/mxgraph-php/examples/deployment.php';
-window.OPEN_URL = window.OPEN_URL || '/open';
+window.EXPORT_URL = '';
+window.SAVE_URL = '';
+window.OPEN_URL = window.OPEN_URL || '';
 window.RESOURCES_PATH = window.RESOURCES_PATH || '/org-editor/resources';
 window.RESOURCE_BASE = window.RESOURCE_BASE || window.RESOURCES_PATH + '/grapheditor';
 window.STENCIL_PATH = window.STENCIL_PATH || '/org-editor/stencils';
