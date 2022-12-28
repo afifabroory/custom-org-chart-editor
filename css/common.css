@@ -184,3 +184,45 @@ td.mxPopupMenuIcon {
 #imageContainer  input[type="radio"]:checked + img {
 	background-color: #aaa;
 }
+
+#top-bar {
+	background-color: #ecf0f5;
+	min-height: 50px;
+	position: relative;
+	width: 100%;
+	display: inline-flex;
+	justify-content: space-between;
+}
+
+#cancel-update-btn {
+	padding: 8px 24px;
+	min-width: 24px;
+	margin-right: 12px;
+	background-color: #f39c12;
+	border: 1px solid #e08e0b;
+	color: white;
+	border-radius: 3px;
+	text-decoration: none;
+}
+
+#cancel-update-btn:hover,#cancel-update-btn:active,#cancel-update-btn.hover {
+    background-color: #e08e0b
+}
+
+#top-bar form {
+	padding: 16px;
+}
+
+#top-bar form input[type="submit"] {
+	padding: 8px 24px;
+	min-width: 24px;
+	margin-right: 12px;
+	background-color: #00a65a;
+	border: 1px solid #008d4c;
+	color: white;
+	border-radius: 3px;
+}
+
+#top-bar form input[type="submit"]:hover,#top-bar form input[type="submit"]:active,#top-bar form input[type="submit"].hover {
+    background-color: #008d4c
+}
