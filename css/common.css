@@ -225,15 +225,15 @@ td.mxPopupMenuIcon {
   }
 
 
-  figure {
+#imageContainer figure {
 	  padding: 5px;
 	  margin: 20px 10px;
   }
   
-  img:hover {
+#imageContainer img:hover {
 	  transform: scale(0.978);
   }
-  img {
+#imageContainer img {
 	  transition: transform 0.2s;
   }
   
