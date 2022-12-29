@@ -433,40 +433,74 @@ var ImageDialog = function (editorUi, fn, cancelFn)
 		content.style.flexWrap = 'wrap'
 		content.style.justifyContent = 'center'
 	
-		data.forEach((e, i) => {
-		  let label = document.createElement('label');
+		try {
+			data.forEach((e, i) => {
+				let label = document.createElement('label');
+			  
+				  let input = document.createElement('input');
+				  input.type = 'radio';
+				  input.name = 'images';
+				  input.value = e['photo'];
+				
+				let figure = document.createElement('figure')
+				
+				let imageContent = new Image()
+	  
+				imageContent.onload = () => {
+				  let name = document.createElement('figcaption')
+				  name.innerText = e['name']
+			  
+				  let position = document.createElement('figcaption')
+				  position.innerText = e['position']
+			  
+				  figure.appendChild(imageContent)
+				  figure.appendChild(name)
+				  figure.appendChild(position)
+				  
+				  label.appendChild(input)
+				  label.appendChild(figure)
+			  
+				  content.appendChild(label)
+				}
+	  
+				imageContent.src = e["photo"]
+				imageContent.width = 80
+			  })
+		} catch (e) {
+			if (e instanceof TypeError) {
+				let label = document.createElement('label');
+			  
+				  let input = document.createElement('input');
+				  input.type = 'radio';
+				  input.name = 'images';
+				  input.value = data['photo'];
+				
+				let figure = document.createElement('figure')
+				
+				let imageContent = new Image()
+	  
+				imageContent.onload = () => {
+				  let name = document.createElement('figcaption')
+				  name.innerText = data['name']
+			  
+				  let position = document.createElement('figcaption')
+				  position.innerText = data['position']
+			  
+				  figure.appendChild(imageContent)
+				  figure.appendChild(name)
+				  figure.appendChild(position)
+				  
+				  label.appendChild(input)
+				  label.appendChild(figure)
+			  
+				  content.appendChild(label)
+				}
+	  
+				imageContent.src = data["photo"]
+				imageContent.width = 80
+			}
+		}
 		
-			let input = document.createElement('input');
-			input.type = 'radio';
-			input.name = 'images';
-			input.value = e['photo'];
-		  
-		  let figure = document.createElement('figure')
-		  
-		  let imageContent = new Image()
-
-		  imageContent.onload = () => {
-			let name = document.createElement('figcaption')
-			name.innerText = e['name']
-		
-			let position = document.createElement('figcaption')
-			position.innerText = e['position']
-		
-			figure.appendChild(imageContent)
-			figure.appendChild(name)
-			figure.appendChild(position)
-			
-			label.appendChild(input)
-			label.appendChild(figure)
-		
-			content.appendChild(label)
-		  }
-
-		  imageContent.src = e["photo"]
-		  imageContent.width = 80
-
-		  
-		})
 		container.appendChild(content)
 	
 		// Register content
@@ -475,36 +509,78 @@ var ImageDialog = function (editorUi, fn, cancelFn)
 
 	// Variable getImageAssets must declare in global scope
 	getImageAssets().then(data => {
-		Object.keys(data).forEach((key, index) => {
-			let contentWrapper = document.createElement('div')
+		if (Array.isArray(data)) {
+			let content = document.createElement('div');
+			content.style.display = 'flex'
+			content.style.alignItems = 'flex-start'
+			content.style.flexWrap = 'wrap'
+			content.style.justifyContent = 'center'
 
-			let btn = document.createElement('button')
-			btn.classList.add('accordion')
-			btn.innerText = key;
-
-			btn.addEventListener('click', (element) => {
-				if (element.target.getAttribute('content-loaded') === '0') {
-					showImages(data[key], contentWrapper)
-					element.target.setAttribute('content-loaded', 1)
+			data.forEach((e, i) => {
+				let label = document.createElement('label');
+		
+				let input = document.createElement('input');
+				input.type = 'radio';
+				input.name = 'images';
+				input.value = e['photo'];
+		
+				let image = new Image();
+				let figure = document.createElement('figure')
+	  
+				image.onload = () => {
+				  let name = document.createElement('figcaption')
+				  name.innerText = e['name']
+			  
+				  let position = document.createElement('figcaption')
+				  position.innerText = e['position']
+			  
+				  figure.appendChild(image)
+				  figure.appendChild(name)
+				  figure.appendChild(position)
+				  
+				  label.appendChild(input)
+				  label.appendChild(figure)
 				}
-				accordionHook(index)
-			})
 
+				image.src = e['photo'];
+				image.width = 80;
 
-			contentWrapper.appendChild(btn)
-
-			// Content of accordion only get loaded at the first time
-			// on the first category.
-			if (index == 0) {
-				showImages(data[key], contentWrapper, true)
-				btn.classList.add('active-accordion')
-				btn.setAttribute('content-loaded', 1)
-			} else
-				btn.setAttribute('content-loaded', 0)
-
-			imageContainer.appendChild(contentWrapper)
-			registerButton(btn)
-		}) 
+				content.appendChild(label)		
+			}) 
+			imageContainer.appendChild(content)
+		} else {
+			Object.keys(data).forEach((key, index) => {
+				let contentWrapper = document.createElement('div')
+	
+				let btn = document.createElement('button')
+				btn.classList.add('accordion')
+				btn.innerText = key;
+	
+				btn.addEventListener('click', (element) => {
+					if (element.target.getAttribute('content-loaded') === '0') {
+						showImages(data[key], contentWrapper)
+						element.target.setAttribute('content-loaded', 1)
+					}
+					accordionHook(index)
+				})
+	
+	
+				contentWrapper.appendChild(btn)
+	
+				// Content of accordion only get loaded at the first time
+				// on the first category.
+				if (index == 0) {
+					showImages(data[key], contentWrapper, true)
+					btn.classList.add('active-accordion')
+					btn.setAttribute('content-loaded', 1)
+				} else
+					btn.setAttribute('content-loaded', 0)
+	
+				imageContainer.appendChild(contentWrapper)
+				registerButton(btn)
+			}) 
+		}
+		
 		div.appendChild(imageContainer);
 		// End Image List
 	
