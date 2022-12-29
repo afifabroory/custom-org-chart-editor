@@ -581,7 +581,8 @@ html body .geBigStandardButton:active {
 .geSprite-fit { background-position: 0 -277px; }
 .geSprite-fontcolor { background-position: 0 -322px; }
 .geSprite-gradientcolor { background-position: 0 -368px; }
-.geSprite-image { background-position: 0 -414px; }
+.geSprite-image { margin-top: 4px;margin-left: 2px; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAdgAAAHYBTnsmCAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAD+SURBVDiNpdO9SsNgFMbxX2vxAx0EQUVE70DwA0QRnLyFgpPi6ujoZTi4FnF0cXUpOugdWBAcdHBzqyCCjUNOapCmtPEPh5DnfZ+T5yRv+CeVuM5hE2MDeBI8RoEdtGNhmDrNGlyVMCfx0JEqZoabusskJqolzV16NfhCq2B/G89/xabfuVpYCf0In7m1OyxKv1wjtKl8g0Ym5NjCG76xl9OPI+l4NsI9DiNingds4BZroU3Hvu1IqBk1KAeReB5q0WVB+kI7fYwV6ZlZj/sbXNRwjXPprB8F5gQneMISlvGC1+xfqGM3EvWigzPp+d/HJWbx3idxIaNYLWPsyQ+rak0TCS4GXwAAAABJRU5ErkJggg==') no-repeat;
+width: 24px; height: 24px; }
 .geSprite-italic { background-position: 0 -460px; }
 .geSprite-left { background-position: 0 -505px; }
 .geSprite-middle { background-position: 0 -552px; }
