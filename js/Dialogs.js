@@ -379,6 +379,9 @@ var ImageDialog = function (editorUi, fn, cancelFn)
 	// Container
 	var div = document.createElement('div');
 	div.setAttribute('align', 'center');
+	div.style.display = 'flex';
+	div.style.height = '100%';
+	div.style.flexDirection = 'column';
 	
 	// Title
 	var h3 = document.createElement('h2');
@@ -390,24 +393,117 @@ var ImageDialog = function (editorUi, fn, cancelFn)
 	var imageContainer = document.createElement('div');
 	imageContainer.setAttribute('id', 'imageContainer');
 
-	// Variable getImageAssets must declare in global scope
-	getImageAssets().then(data => {
-		data.forEach((e, i) => {
-			let label = document.createElement('label');
+
+	var element = []
+	const registerElement = (e) => {element.push(e)}
+
+	var button = []
+	const registerButton = (e) => {button.push(e)}
+
+	const hide = (pos) => {
+		element[pos].style.display = 'none'
+		button[pos].classList.remove('active-accordion')
+	}
+
+	const openElement = (pos) => {
+		element[pos].style.display = 'flex'
+		button[pos].classList.add('active-accordion')
+	}
+
+	const accordionHook = (i) => {
+		// Is the accordion already opened?
+		if (element[i].style.display === 'flex') {
+		  hide(i)
+		  return;
+		}
 	
+		openElement(i)
+		button[i].scrollIntoView(true)
+	  }
+
+	  const showImages = (data, container, isFirst = false) => {
+		let content = document.createElement('div');
+	
+		if (isFirst)
+		  content.style.display = 'flex'
+		else 
+		  content.style.display = 'none'
+		
+		content.style.alignItems = 'flex-start'
+		content.style.flexWrap = 'wrap'
+		content.style.justifyContent = 'center'
+	
+		data.forEach((e, i) => {
+		  let label = document.createElement('label');
+		
 			let input = document.createElement('input');
 			input.type = 'radio';
 			input.name = 'images';
-			input.value = i;
+			input.value = e['photo'];
+		  
+		  let figure = document.createElement('figure')
+		  
+		  let imageContent = new Image()
+
+		  imageContent.onload = () => {
+			let name = document.createElement('figcaption')
+			name.innerText = e['name']
+		
+			let position = document.createElement('figcaption')
+			position.innerText = e['position']
+		
+			figure.appendChild(imageContent)
+			figure.appendChild(name)
+			figure.appendChild(position)
+			
+			label.appendChild(input)
+			label.appendChild(figure)
+		
+			content.appendChild(label)
+		  }
+
+		  imageContent.src = e["photo"]
+		  imageContent.width = 80
+
+		  
+		})
+		container.appendChild(content)
 	
-			let image = new Image();
-			image.src = e['photo'];
-			console.log(image)
-			image.height = 80;
-	
-			label.appendChild(input);
-			label.appendChild(image);
-			imageContainer.appendChild(label)
+		// Register content
+		registerElement(content)
+	  }
+
+	// Variable getImageAssets must declare in global scope
+	getImageAssets().then(data => {
+		Object.keys(data).forEach((key, index) => {
+			let contentWrapper = document.createElement('div')
+
+			let btn = document.createElement('button')
+			btn.classList.add('accordion')
+			btn.innerText = key;
+
+			btn.addEventListener('click', (element) => {
+				if (element.target.getAttribute('content-loaded') === '0') {
+					showImages(data[key], contentWrapper)
+					element.target.setAttribute('content-loaded', 1)
+				}
+				accordionHook(index)
+			})
+
+
+			contentWrapper.appendChild(btn)
+
+			// Content of accordion only get loaded at the first time
+			// on the first category.
+			if (index == 0) {
+				showImages(data[key], contentWrapper, true)
+				btn.classList.add('active-accordion')
+				btn.setAttribute('content-loaded', 1)
+			} else
+				btn.setAttribute('content-loaded', 0)
+
+			imageContainer.appendChild(contentWrapper)
+			registerButton(btn)
 		}) 
 		div.appendChild(imageContainer);
 		// End Image List
@@ -432,7 +528,7 @@ var ImageDialog = function (editorUi, fn, cancelFn)
 		// Insert button
 		var genericBtn = mxUtils.button('Insert', function()
 		{
-			var srcImage = data[parseInt(document.querySelector('#imageContainer input[name="images"]:checked').value)]['photo'];
+			var srcImage = document.querySelector('#imageContainer input[name="images"]:checked').value;
 			var img = new Image();
 			img.onload = () => {
 				fn(srcImage, img.width, img.height)

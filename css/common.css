@@ -165,25 +165,101 @@ td.mxPopupMenuIcon {
 	cursor:default !important;
 }
 
-#imageContainer {
-	padding: 20px;
-	overflow-y: scroll;
-	height: 250px;
-	margin-bottom: 12px;
-}
+.accordion {
+	background-color: #eee;
+	color: #444;
+	cursor: pointer;
+	padding: 18px;
+	width: 100%;
+	text-align: left;
+	border: none;
+	outline: none;
+	transition: 0.4s;
+	font-size: 16px;
+	outline: 1px solid #333;
+  }
+  
+  .active-accordion, .accordion:hover {
+	background-color: #ccc;
+  }
+  
+  
+  .accordion:after {
+	content: '\02795'; 
+	font-size: 13px;
+	color: #777;
+	float: right;
+	margin-left: 5px;
+  }
+  
+  .active-accordion:after {
+	content: "\2796"; 
+  }
+  
+  .panel {
+	padding: 0 18px;
+	background-color: white;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+  }
+  
+  #imageContainer figure {
+	  display: inline-block;
+	  max-width: 120px;
+	  height: 100%;
+  }
 
-#imageContainer  input[type="radio"] {
-	display: none;
-}
+  #imageContainer figcaption {
+	margin: 5px 0 0 0;
+	text-align: center;
+	overflow-wrap: break-word;
+	font-weight: bold;
+	color: #666;
+  }
+
+  #imageContainer figcaption:last-child {
+	  color: #999;
+	  font-weight: normal;
+	  font-size: 12px;
+  }
+
+
+  figure {
+	  padding: 5px;
+	  margin: 20px 10px;
+  }
   
-#imageContainer  img {
-	padding: 5px;
-	margin: 5px;
-}
+  img:hover {
+	  transform: scale(0.978);
+  }
+  img {
+	  transition: transform 0.2s;
+  }
   
-#imageContainer  input[type="radio"]:checked + img {
-	background-color: #aaa;
-}
+  #imageContainer {
+	  padding: 20px;
+	  overflow-y: scroll;
+	  height: 100%;
+	  margin-bottom: 12px;
+  }
+  
+  #imageContainer  input[type="radio"] {
+	  display: none;
+  }
+	
+  #imageContainer  img {
+	  padding: 5px;
+	  margin: 5px;
+  }
+	
+  #imageContainer input[type="radio"]:checked + figure {
+	  background-color: #DDD;
+  }
+  
+  #imageContainer input[type="radio"]:checked + figure figcaption {
+	  color: #000;
+  }
 
 #top-bar {
 	background-color: #ecf0f5;
@@ -226,3 +302,4 @@ td.mxPopupMenuIcon {
 #top-bar form input[type="submit"]:hover,#top-bar form input[type="submit"]:active,#top-bar form input[type="submit"].hover {
     background-color: #008d4c
 }
+
