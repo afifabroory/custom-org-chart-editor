@@ -4445,7 +4445,7 @@ EditorUi.prototype.showImageDialog = function(value, fn, ignoreExisting)
 EditorUi.prototype.showLinkDialog = function(value, btnLabel, fn)
 {
 	var dlg = new LinkDialog(this, value, btnLabel, fn);
-	this.showDialog(dlg.container, 420, 90, true, true);
+	this.showDialog(dlg.container, 420, 100, true, true);
 	dlg.init();
 };
 
